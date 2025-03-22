@@ -1,0 +1,23 @@
+<h2>{{ editMode ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onGuardar()">
+  <label>Nombre:</label>
+  <input formControlName="nombre" />
+  <br />
+  <label>Descripción:</label>
+  <textarea formControlName="descripcion"></textarea>
+  <br />
+  <label>Precio:</label>
+  <input type="number" formControlName="precio" />
+  <br />
+  <label>Disponible:</label>
+  <input type="checkbox" formControlName="disponible" />
+  <br />
+  <label>Categoría:</label>
+  <input formControlName="categoria" />
+  <br />
+
+  <button [disabled]="form.invalid" type="submit">
+    {{ editMode ? 'Actualizar' : 'Guardar' }}
+  </button>
+</form>
