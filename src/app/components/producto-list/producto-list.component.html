@@ -1,10 +1,114 @@
-<h2>Lista de Productos</h2>
-<button (click)="irANuevo()">Nuevo Producto</button>
+<!-- Contenedor principal -->
+<div class="p-6 bg-gray-50">
 
-<ul>
-  <li *ngFor="let p of productos">
-    {{ p.nombre }} - {{ p.precio | currency }}
-    <button (click)="irAEditar(p.id)">Editar</button>
-    <button (click)="eliminar(p.id)">Eliminar</button>
-  </li>
-</ul>
+  <!-- Título y descripción -->
+  <h1 class="text-2xl font-semibold text-emerald-600 mb-2">
+    Lista de Productos
+  </h1>
+  <p class="text-gray-700 mb-4">
+    Aquí puedes ver la lista de productos y gestionarlos.
+  </p>
+
+  <!-- Botón "Nuevo Producto" -->
+  <div class="mb-4">
+    <button
+      (click)="irANuevo()"
+      class="px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition duration-300"
+    >
+      Agregar Producto
+    </button>
+  </div>
+
+  <!-- Tabla (vista escritorio) -->
+  <div class="hidden lg:block overflow-hidden rounded-lg border border-gray-200 shadow-md">
+    <table class="min-w-full">
+      <thead class="bg-emerald-600 text-white">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Nombre</th>
+          <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Descripción</th>
+          <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Precio</th>
+          <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let p of productos; let rowIndex = index"
+          [ngClass]="(rowIndex % 2 === 0) ? 'bg-gray-50' : 'bg-white'"
+        >
+          <td class="px-6 py-4 text-sm text-gray-700">
+            {{ p.nombre }}
+          </td>
+          <td class="px-6 py-4 text-sm text-gray-700">
+            {{ p.descripcion }}
+          </td>
+          <td class="px-6 py-4 text-sm text-gray-700">
+            {{ p.precio | currency }}
+          </td>
+          <td class="px-6 py-4 text-sm text-gray-700">
+            <div class="flex space-x-2">
+              <button
+                (click)="irAEditar(p.id)"
+                class="px-2 py-1 text-blue-500 hover:text-blue-700 transition"
+                title="Editar"
+              >
+                Editar
+              </button>
+              <button
+                (click)="eliminar(p.id)"
+                class="px-2 py-1 text-red-500 hover:text-red-700 transition"
+                title="Eliminar"
+              >
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+        <!-- Si quieres un mensaje cuando no haya productos, podrías hacer:
+        <tr *ngIf="productos.length === 0">
+          <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+            No hay productos disponibles
+          </td>
+        </tr>
+        -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Vista en modo móvil (tarjetas) -->
+  <div class="block lg:hidden">
+    <div
+      *ngFor="let p of productos; let rowIndex = index"
+      class="p-4 border-b border-gray-200 bg-white rounded-lg shadow-md mb-4"
+    >
+      <div class="flex justify-between mb-2">
+        <span class="font-semibold text-emerald-600">Nombre:</span>
+        <span class="text-gray-700">{{ p.nombre }}</span>
+      </div>
+      <div class="flex justify-between mb-2">
+        <span class="font-semibold text-emerald-600">Descripción:</span>
+        <span class="text-gray-700">{{ p.descripcion }}</span>
+      </div>
+      <div class="flex justify-between mb-2">
+        <span class="font-semibold text-emerald-600">Precio:</span>
+        <span class="text-gray-700">{{ p.precio | currency }}</span>
+      </div>
+      <div class="flex space-x-2 justify-end">
+        <button
+          (click)="irAEditar(p.id)"
+          class="px-2 py-1 text-blue-500 hover:text-blue-700 transition"
+          title="Editar"
+        >
+          Editar
+        </button>
+        <button
+          (click)="eliminar(p.id)"
+          class="px-2 py-1 text-red-500 hover:text-red-700 transition"
+          title="Eliminar"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

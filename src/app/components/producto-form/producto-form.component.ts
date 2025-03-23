@@ -12,10 +12,14 @@ import { ProductoService, Producto } from '../../services/producto.service';
   styleUrls: ['./producto-form.component.css']
 })
 export class ProductoFormComponent implements OnInit {
-
   form!: FormGroup;
   editMode = false;
   productoId!: number;
+
+  // Variables para mostrar textos dinámicos en el encabezado y botón
+  title: string = 'Nuevo Producto';
+  description: string = 'Ingresa los datos del producto';
+  titleBtn: string = 'Guardar';
 
   constructor(
     private fb: FormBuilder,
@@ -33,13 +37,16 @@ export class ProductoFormComponent implements OnInit {
       categoria: ['', Validators.required]
     });
 
-    // Revisar si la URL tiene un :id para modo edición
+    // Verificar si la ruta tiene un parámetro "id" para modo edición
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');
       if (idParam) {
         this.editMode = true;
         this.productoId = +idParam;
-        // Cargar datos
+        this.title = 'Editar Producto';
+        this.titleBtn = 'Actualizar';
+        this.description = 'Modifica la información del producto';
+        // Cargar los datos del producto a editar
         this.productoService.getProducto(this.productoId).subscribe(p => {
           this.form.patchValue(p);
         });
@@ -53,13 +60,18 @@ export class ProductoFormComponent implements OnInit {
     const producto: Producto = this.form.value;
 
     if (this.editMode) {
-      // Actualizar
+      // Actualizar el producto
       this.productoService.actualizarProducto(this.productoId, producto)
         .subscribe(() => this.router.navigate(['/productos']));
     } else {
-      // Crear
+      // Crear un nuevo producto
       this.productoService.crearProducto(producto)
         .subscribe(() => this.router.navigate(['/productos']));
     }
+  }
+
+  // Método para regresar al listado de productos
+  regresar() {
+    this.router.navigate(['/productos']);
   }
 }

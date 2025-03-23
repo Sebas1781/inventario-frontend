@@ -1,23 +1,106 @@
-<h2>{{ editMode ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+<div class="min-h-screen flex justify-center items-center bg-white">
+  <div class="w-full max-w-3xl bg-white p-6 md:p-8 rounded-lg shadow-lg">
+    <!-- Botón Regresar (colocado en la parte superior) -->
+    <div class="mb-4">
+      <button
+        type="button"
+        (click)="regresar()"
+        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition duration-300"
+      >
+        Regresar
+      </button>
+    </div>
 
-<form [formGroup]="form" (ngSubmit)="onGuardar()">
-  <label>Nombre:</label>
-  <input formControlName="nombre" />
-  <br />
-  <label>Descripción:</label>
-  <textarea formControlName="descripcion"></textarea>
-  <br />
-  <label>Precio:</label>
-  <input type="number" formControlName="precio" />
-  <br />
-  <label>Disponible:</label>
-  <input type="checkbox" formControlName="disponible" />
-  <br />
-  <label>Categoría:</label>
-  <input formControlName="categoria" />
-  <br />
+    <!-- Encabezado -->
+    <div class="text-center">
+      <h1 class="text-2xl md:text-3xl font-bold text-emerald-600">
+        {{ editMode ? 'Editar Producto' : 'Nuevo Producto' }}
+      </h1>
+      <p class="text-gray-600 mt-2 text-sm md:text-base">
+        {{ editMode ? 'Modifica la información del producto' : 'Ingresa los datos del nuevo producto' }}
+      </p>
+    </div>
 
-  <button [disabled]="form.invalid" type="submit">
-    {{ editMode ? 'Actualizar' : 'Guardar' }}
-  </button>
-</form>
+    <!-- Formulario -->
+    <form [formGroup]="form" (ngSubmit)="onGuardar()" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Campo: Nombre -->
+      <div class="flex flex-col">
+        <label for="nombre" class="text-sm md:text-base font-medium text-gray-700 mb-1">
+          Nombre:
+        </label>
+        <input
+          type="text"
+          id="nombre"
+          formControlName="nombre"
+          placeholder="Nombre del producto"
+          class="border rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
+        />
+      </div>
+
+      <!-- Campo: Descripción -->
+      <div class="flex flex-col">
+        <label for="descripcion" class="text-sm md:text-base font-medium text-gray-700 mb-1">
+          Descripción:
+        </label>
+        <textarea
+          id="descripcion"
+          formControlName="descripcion"
+          placeholder="Descripción del producto"
+          class="border rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
+        ></textarea>
+      </div>
+
+      <!-- Campo: Precio -->
+      <div class="flex flex-col">
+        <label for="precio" class="text-sm md:text-base font-medium text-gray-700 mb-1">
+          Precio:
+        </label>
+        <input
+          type="number"
+          id="precio"
+          formControlName="precio"
+          placeholder="Precio del producto"
+          class="border rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
+        />
+      </div>
+
+      <!-- Campo: Disponible (Checkbox) -->
+      <div class="flex flex-col">
+        <label for="disponible" class="text-sm md:text-base font-medium text-gray-700 mb-1">
+          Disponible:
+        </label>
+        <input
+          type="checkbox"
+          id="disponible"
+          formControlName="disponible"
+          class="border rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500"
+        />
+      </div>
+
+      <!-- Campo: Categoría -->
+      <div class="flex flex-col">
+        <label for="categoria" class="text-sm md:text-base font-medium text-gray-700 mb-1">
+          Categoría:
+        </label>
+        <input
+          type="text"
+          id="categoria"
+          formControlName="categoria"
+          placeholder="Categoría del producto"
+          class="border rounded-md px-4 py-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
+        />
+      </div>
+
+      <!-- Botón de Enviar -->
+      <div class="col-span-1 md:col-span-2 flex justify-end">
+        <button
+          type="submit"
+          [disabled]="form.invalid"
+          class="bg-emerald-600 text-white px-6 py-3 rounded-md font-medium hover:bg-emerald-700 transition duration-300 text-sm md:text-base"
+        >
+          {{ editMode ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
